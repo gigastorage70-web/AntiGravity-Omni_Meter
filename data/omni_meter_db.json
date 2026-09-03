@@ -1,0 +1,941 @@
+{
+  "version": 1,
+  "users": [
+    {
+      "id": "user_admin_master",
+      "email": "admin@antigravity.internal",
+      "password_hash": "dfb9c86818d7a6cc047e7c00185b584af2f77ded08985d223e3e2cc04a5bbdae",
+      "name": "System Super Admin",
+      "tier": "workspace_enterprise",
+      "role": "admin",
+      "storage_limit_gb": 5120,
+      "storage_used_gb": 42.8,
+      "storage_breakdown": {
+        "driveGb": 28.4,
+        "mailGb": 8.2,
+        "photosGb": 4.2,
+        "vaultGb": 2
+      },
+      "created_at": "2026-09-03T19:46:40.525Z",
+      "last_login_at": "2026-09-03T19:46:40.525Z"
+    },
+    {
+      "id": "user_developer_power",
+      "email": "developer.admin@gmail.com",
+      "password_hash": "8993f92447ab68ba8175fd057cb9b00e848090483b7867e3eae6c45c591f8650",
+      "name": "Antigravity Power User",
+      "tier": "google_one_premium",
+      "role": "user",
+      "storage_limit_gb": 2048,
+      "storage_used_gb": 48.6,
+      "storage_breakdown": {
+        "driveGb": 32.1,
+        "mailGb": 9.5,
+        "photosGb": 5,
+        "vaultGb": 2
+      },
+      "created_at": "2026-09-03T19:46:40.525Z",
+      "last_login_at": "2026-09-03T19:46:40.525Z"
+    },
+    {
+      "id": "user_free_tester",
+      "email": "free.user@gmail.com",
+      "password_hash": "ade74fe98eaf923614581d89cfc1a36cc5e744b8a9d4f4e692fc0fdd548b9868",
+      "name": "Google Free Tier User",
+      "tier": "free",
+      "role": "user",
+      "storage_limit_gb": 15,
+      "storage_used_gb": 11.4,
+      "storage_breakdown": {
+        "driveGb": 7.2,
+        "mailGb": 2.8,
+        "photosGb": 1,
+        "vaultGb": 0.4
+      },
+      "created_at": "2026-09-03T19:46:40.525Z",
+      "last_login_at": "2026-09-03T19:46:40.525Z"
+    },
+    {
+      "id": "user_1788464821623_de6269ec",
+      "email": "tester.free.1788464821623@gmail.com",
+      "password_hash": "1e58630c352a3ee11741a5c0f43ebdd24ee41fac3b7aa4ab5c1a0699e73d5718",
+      "name": "Tenant A (Free Tier)",
+      "tier": "free",
+      "role": "user",
+      "storage_limit_gb": 15,
+      "storage_used_gb": 4.2,
+      "storage_breakdown": {
+        "driveGb": 2.52,
+        "mailGb": 1.05,
+        "photosGb": 0.42000000000000004,
+        "vaultGb": 0.21000000000000002
+      },
+      "created_at": "2026-09-03T19:47:01.623Z",
+      "last_login_at": "2026-09-03T19:47:01.623Z"
+    },
+    {
+      "id": "user_1788464821644_0621c460",
+      "email": "tester.premium.1788464821644@gmail.com",
+      "password_hash": "bee97b6c4c737ba8791c69f6d49326f37265ef273b7af7800cfeb432efc10b23",
+      "name": "Tenant B (Google One Premium)",
+      "tier": "google_one_premium",
+      "role": "user",
+      "storage_limit_gb": 2048,
+      "storage_used_gb": 12.8,
+      "storage_breakdown": {
+        "driveGb": 7.68,
+        "mailGb": 3.2,
+        "photosGb": 1.2800000000000002,
+        "vaultGb": 0.6400000000000001
+      },
+      "created_at": "2026-09-03T19:47:01.644Z",
+      "last_login_at": "2026-09-03T19:47:01.644Z"
+    },
+    {
+      "id": "user_1788464829870_352cc87f",
+      "email": "tester.free.1788464829870@gmail.com",
+      "password_hash": "1e58630c352a3ee11741a5c0f43ebdd24ee41fac3b7aa4ab5c1a0699e73d5718",
+      "name": "Tenant A (Free Tier)",
+      "tier": "free",
+      "role": "user",
+      "storage_limit_gb": 15,
+      "storage_used_gb": 4.2,
+      "storage_breakdown": {
+        "driveGb": 2.52,
+        "mailGb": 1.05,
+        "photosGb": 0.42000000000000004,
+        "vaultGb": 0.21000000000000002
+      },
+      "created_at": "2026-09-03T19:47:09.871Z",
+      "last_login_at": "2026-09-03T19:47:09.871Z"
+    },
+    {
+      "id": "user_1788464829893_fae3ec07",
+      "email": "tester.premium.1788464829893@gmail.com",
+      "password_hash": "bee97b6c4c737ba8791c69f6d49326f37265ef273b7af7800cfeb432efc10b23",
+      "name": "Tenant B (Google One Premium)",
+      "tier": "google_one_premium",
+      "role": "user",
+      "storage_limit_gb": 2048,
+      "storage_used_gb": 12.8,
+      "storage_breakdown": {
+        "driveGb": 7.68,
+        "mailGb": 3.2,
+        "photosGb": 1.2800000000000002,
+        "vaultGb": 0.6400000000000001
+      },
+      "created_at": "2026-09-03T19:47:09.893Z",
+      "last_login_at": "2026-09-03T19:47:09.893Z"
+    }
+  ],
+  "devices": [
+    {
+      "id": "dev_win_workstation",
+      "user_id": "user_developer_power",
+      "name": "Windows Studio Workstation",
+      "type": "desktop",
+      "os": "Windows 11 Pro",
+      "ip": "127.0.0.1 (Localhost)",
+      "last_active": "Active Now",
+      "tokens_consumed": 68420,
+      "is_current": true
+    },
+    {
+      "id": "dev_s21_phone",
+      "user_id": "user_developer_power",
+      "name": "Samsung Galaxy S21+ 5G",
+      "type": "mobile",
+      "os": "Android 14 (OneUI 6.1)",
+      "ip": "192.168.1.144",
+      "last_active": "12m ago",
+      "tokens_consumed": 24149,
+      "is_current": false
+    },
+    {
+      "id": "dev_free_laptop",
+      "user_id": "user_free_tester",
+      "name": "Acer Chromebook / ChromeOS",
+      "type": "laptop",
+      "os": "ChromeOS 124",
+      "ip": "192.168.1.199",
+      "last_active": "1 hour ago",
+      "tokens_consumed": 8400,
+      "is_current": true
+    },
+    {
+      "id": "dev_1788464821641_7c2710",
+      "user_id": "user_1788464821623_de6269ec",
+      "name": "Primary Web Console",
+      "type": "desktop",
+      "os": "Windows / Browser",
+      "ip": "127.0.0.1",
+      "last_active": "Active Now",
+      "tokens_consumed": 0,
+      "is_current": true
+    },
+    {
+      "id": "dev_1788464821644_3fe1eb",
+      "user_id": "user_1788464821644_0621c460",
+      "name": "Primary Web Console",
+      "type": "desktop",
+      "os": "Windows / Browser",
+      "ip": "127.0.0.1",
+      "last_active": "Active Now",
+      "tokens_consumed": 0,
+      "is_current": true
+    },
+    {
+      "id": "dev_1788464829890_b39f85",
+      "user_id": "user_1788464829870_352cc87f",
+      "name": "Primary Web Console",
+      "type": "desktop",
+      "os": "Windows / Browser",
+      "ip": "127.0.0.1",
+      "last_active": "Active Now",
+      "tokens_consumed": 0,
+      "is_current": true
+    },
+    {
+      "id": "dev_1788464829894_f029ea",
+      "user_id": "user_1788464829893_fae3ec07",
+      "name": "Primary Web Console",
+      "type": "desktop",
+      "os": "Windows / Browser",
+      "ip": "127.0.0.1",
+      "last_active": "Active Now",
+      "tokens_consumed": 0,
+      "is_current": true
+    }
+  ],
+  "quotas": [
+    {
+      "id": "quota_dev_g3fm",
+      "user_id": "user_developer_power",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - AGQ",
+      "category": "LLM",
+      "code": "G3FM-2026-PREVIEW",
+      "remaining_percentage": 15,
+      "tokens_consumed_5h": 850000,
+      "token_limit_5h": 1000000,
+      "total_limit": "1,000,000 tokens",
+      "consumed": "850k tokens",
+      "rpm_limit": 60,
+      "current_rpm": 24,
+      "tpm_limit": 1000000,
+      "current_tpm": 850000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 28,
+      "status": "critical",
+      "hourly_history": [
+        {
+          "hour": "14:00",
+          "tokens": 180000,
+          "requests": 25
+        },
+        {
+          "hour": "15:00",
+          "tokens": 240000,
+          "requests": 38
+        },
+        {
+          "hour": "16:00",
+          "tokens": 210000,
+          "requests": 32
+        },
+        {
+          "hour": "17:00",
+          "tokens": 120000,
+          "requests": 18
+        },
+        {
+          "hour": "18:00",
+          "tokens": 100000,
+          "requests": 14
+        }
+      ]
+    },
+    {
+      "id": "quota_dev_pro",
+      "user_id": "user_developer_power",
+      "model_id": "gemini-pro",
+      "model_name": "Gemini 3.0 Pro Enterprise",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO-EXP",
+      "remaining_percentage": 82,
+      "tokens_consumed_5h": 360000,
+      "token_limit_5h": 2000000,
+      "total_limit": "2,000,000 tokens",
+      "consumed": "360k tokens",
+      "rpm_limit": 120,
+      "current_rpm": 18,
+      "tpm_limit": 2000000,
+      "current_tpm": 360000,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 240,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_free_g3fm",
+      "user_id": "user_free_tester",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - Standard",
+      "category": "LLM",
+      "code": "G3FM-FREE-TIER",
+      "remaining_percentage": 60,
+      "tokens_consumed_5h": 40000,
+      "token_limit_5h": 100000,
+      "total_limit": "100,000 tokens",
+      "consumed": "40k tokens",
+      "rpm_limit": 15,
+      "current_rpm": 4,
+      "tpm_limit": 100000,
+      "current_tpm": 40000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 85,
+      "status": "optimal",
+      "hourly_history": [
+        {
+          "hour": "16:00",
+          "tokens": 20000,
+          "requests": 6
+        },
+        {
+          "hour": "17:00",
+          "tokens": 20000,
+          "requests": 5
+        }
+      ]
+    },
+    {
+      "id": "quota_user_1788464821623_de6269ec_g3fm",
+      "user_id": "user_1788464821623_de6269ec",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - Standard",
+      "category": "LLM",
+      "code": "G3FM-FREE-TIER",
+      "remaining_percentage": 45,
+      "tokens_consumed_5h": 55000,
+      "token_limit_5h": 100000,
+      "total_limit": "100k tokens",
+      "consumed": "55k tokens",
+      "rpm_limit": 15,
+      "current_rpm": 4,
+      "tpm_limit": 100000,
+      "current_tpm": 25000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 95,
+      "status": "warning",
+      "hourly_history": [
+        {
+          "hour": "14:00",
+          "tokens": 5000,
+          "requests": 12
+        },
+        {
+          "hour": "15:00",
+          "tokens": 7500,
+          "requests": 18
+        },
+        {
+          "hour": "16:00",
+          "tokens": 6250,
+          "requests": 15
+        },
+        {
+          "hour": "17:00",
+          "tokens": 3750,
+          "requests": 9
+        },
+        {
+          "hour": "18:00",
+          "tokens": 2500,
+          "requests": 6
+        }
+      ]
+    },
+    {
+      "id": "quota_user_1788464821623_de6269ec_pro",
+      "user_id": "user_1788464821623_de6269ec",
+      "model_id": "gemini-pro",
+      "model_name": "Gemini 3.0 Pro",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO",
+      "remaining_percentage": 45,
+      "tokens_consumed_5h": 120000,
+      "token_limit_5h": 2000000,
+      "total_limit": "2,000,000 tokens",
+      "consumed": "120k tokens",
+      "rpm_limit": 120,
+      "current_rpm": 12,
+      "tpm_limit": 2000000,
+      "current_tpm": 120000,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 180,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821623_de6269ec_claude",
+      "user_id": "user_1788464821623_de6269ec",
+      "model_id": "claude-sonnet",
+      "model_name": "Claude 3.7 Sonnet (Thinking)",
+      "category": "LLM",
+      "code": "CLAUDE-3-7-SONNET",
+      "remaining_percentage": 20,
+      "tokens_consumed_5h": 180000,
+      "token_limit_5h": 500000,
+      "total_limit": "500,000 tokens",
+      "consumed": "180k tokens",
+      "rpm_limit": 50,
+      "current_rpm": 8,
+      "tpm_limit": 500000,
+      "current_tpm": 180000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 110,
+      "status": "warning",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821623_de6269ec_banana",
+      "user_id": "user_1788464821623_de6269ec",
+      "model_id": "nano-banana",
+      "model_name": "Nano-Banana Image Diffusion",
+      "category": "Image",
+      "code": "NANO-BANANA-v2",
+      "remaining_percentage": 50,
+      "tokens_consumed_5h": 7,
+      "token_limit_5h": 15,
+      "total_limit": "15 credits",
+      "consumed": "7 credits",
+      "rpm_limit": 10,
+      "current_rpm": 1,
+      "tpm_limit": 100,
+      "current_tpm": 15,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 360,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821623_de6269ec_veo",
+      "user_id": "user_1788464821623_de6269ec",
+      "model_id": "veo-video",
+      "model_name": "Google Veo 2 / Flow Labs",
+      "category": "Video",
+      "code": "VEO-2-CINEMA",
+      "remaining_percentage": 33,
+      "tokens_consumed_5h": 2,
+      "token_limit_5h": 3,
+      "total_limit": "3 renders",
+      "consumed": "2 renders",
+      "rpm_limit": 2,
+      "current_rpm": 0,
+      "tpm_limit": 20,
+      "current_tpm": 6,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 500,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821644_0621c460_g3fm",
+      "user_id": "user_1788464821644_0621c460",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - AGQ",
+      "category": "LLM",
+      "code": "G3FM-2026-PREVIEW",
+      "remaining_percentage": 15,
+      "tokens_consumed_5h": 850000,
+      "token_limit_5h": 1000000,
+      "total_limit": "1,000k tokens",
+      "consumed": "850k tokens",
+      "rpm_limit": 60,
+      "current_rpm": 24,
+      "tpm_limit": 1000000,
+      "current_tpm": 850000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 28,
+      "status": "critical",
+      "hourly_history": [
+        {
+          "hour": "14:00",
+          "tokens": 170000,
+          "requests": 12
+        },
+        {
+          "hour": "15:00",
+          "tokens": 255000,
+          "requests": 18
+        },
+        {
+          "hour": "16:00",
+          "tokens": 212500,
+          "requests": 15
+        },
+        {
+          "hour": "17:00",
+          "tokens": 127500,
+          "requests": 9
+        },
+        {
+          "hour": "18:00",
+          "tokens": 85000,
+          "requests": 6
+        }
+      ]
+    },
+    {
+      "id": "quota_user_1788464821644_0621c460_pro",
+      "user_id": "user_1788464821644_0621c460",
+      "model_id": "gemini-pro",
+      "model_name": "Gemini 3.0 Pro",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO",
+      "remaining_percentage": 82,
+      "tokens_consumed_5h": 120000,
+      "token_limit_5h": 2000000,
+      "total_limit": "2,000,000 tokens",
+      "consumed": "120k tokens",
+      "rpm_limit": 120,
+      "current_rpm": 12,
+      "tpm_limit": 2000000,
+      "current_tpm": 120000,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 180,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821644_0621c460_claude",
+      "user_id": "user_1788464821644_0621c460",
+      "model_id": "claude-sonnet",
+      "model_name": "Claude 3.7 Sonnet (Thinking)",
+      "category": "LLM",
+      "code": "CLAUDE-3-7-SONNET",
+      "remaining_percentage": 64,
+      "tokens_consumed_5h": 180000,
+      "token_limit_5h": 500000,
+      "total_limit": "500,000 tokens",
+      "consumed": "180k tokens",
+      "rpm_limit": 50,
+      "current_rpm": 8,
+      "tpm_limit": 500000,
+      "current_tpm": 180000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 110,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821644_0621c460_banana",
+      "user_id": "user_1788464821644_0621c460",
+      "model_id": "nano-banana",
+      "model_name": "Nano-Banana Image Diffusion",
+      "category": "Image",
+      "code": "NANO-BANANA-v2",
+      "remaining_percentage": 85,
+      "tokens_consumed_5h": 15,
+      "token_limit_5h": 100,
+      "total_limit": "100 credits",
+      "consumed": "15 credits",
+      "rpm_limit": 10,
+      "current_rpm": 1,
+      "tpm_limit": 100,
+      "current_tpm": 15,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 360,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464821644_0621c460_veo",
+      "user_id": "user_1788464821644_0621c460",
+      "model_id": "veo-video",
+      "model_name": "Google Veo 2 / Flow Labs",
+      "category": "Video",
+      "code": "VEO-2-CINEMA",
+      "remaining_percentage": 70,
+      "tokens_consumed_5h": 6,
+      "token_limit_5h": 20,
+      "total_limit": "20 renders",
+      "consumed": "6 renders",
+      "rpm_limit": 2,
+      "current_rpm": 0,
+      "tpm_limit": 20,
+      "current_tpm": 6,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 500,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829870_352cc87f_g3fm",
+      "user_id": "user_1788464829870_352cc87f",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - Standard",
+      "category": "LLM",
+      "code": "G3FM-FREE-TIER",
+      "remaining_percentage": 45,
+      "tokens_consumed_5h": 55000,
+      "token_limit_5h": 100000,
+      "total_limit": "100k tokens",
+      "consumed": "55k tokens",
+      "rpm_limit": 15,
+      "current_rpm": 4,
+      "tpm_limit": 100000,
+      "current_tpm": 25000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 95,
+      "status": "warning",
+      "hourly_history": [
+        {
+          "hour": "14:00",
+          "tokens": 5000,
+          "requests": 12
+        },
+        {
+          "hour": "15:00",
+          "tokens": 7500,
+          "requests": 18
+        },
+        {
+          "hour": "16:00",
+          "tokens": 6250,
+          "requests": 15
+        },
+        {
+          "hour": "17:00",
+          "tokens": 3750,
+          "requests": 9
+        },
+        {
+          "hour": "18:00",
+          "tokens": 2500,
+          "requests": 6
+        }
+      ]
+    },
+    {
+      "id": "quota_user_1788464829870_352cc87f_pro",
+      "user_id": "user_1788464829870_352cc87f",
+      "model_id": "gemini-pro",
+      "model_name": "Gemini 3.0 Pro",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO",
+      "remaining_percentage": 45,
+      "tokens_consumed_5h": 120000,
+      "token_limit_5h": 2000000,
+      "total_limit": "2,000,000 tokens",
+      "consumed": "120k tokens",
+      "rpm_limit": 120,
+      "current_rpm": 12,
+      "tpm_limit": 2000000,
+      "current_tpm": 120000,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 180,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829870_352cc87f_claude",
+      "user_id": "user_1788464829870_352cc87f",
+      "model_id": "claude-sonnet",
+      "model_name": "Claude 3.7 Sonnet (Thinking)",
+      "category": "LLM",
+      "code": "CLAUDE-3-7-SONNET",
+      "remaining_percentage": 20,
+      "tokens_consumed_5h": 180000,
+      "token_limit_5h": 500000,
+      "total_limit": "500,000 tokens",
+      "consumed": "180k tokens",
+      "rpm_limit": 50,
+      "current_rpm": 8,
+      "tpm_limit": 500000,
+      "current_tpm": 180000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 110,
+      "status": "warning",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829870_352cc87f_banana",
+      "user_id": "user_1788464829870_352cc87f",
+      "model_id": "nano-banana",
+      "model_name": "Nano-Banana Image Diffusion",
+      "category": "Image",
+      "code": "NANO-BANANA-v2",
+      "remaining_percentage": 50,
+      "tokens_consumed_5h": 7,
+      "token_limit_5h": 15,
+      "total_limit": "15 credits",
+      "consumed": "7 credits",
+      "rpm_limit": 10,
+      "current_rpm": 1,
+      "tpm_limit": 100,
+      "current_tpm": 15,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 360,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829870_352cc87f_veo",
+      "user_id": "user_1788464829870_352cc87f",
+      "model_id": "veo-video",
+      "model_name": "Google Veo 2 / Flow Labs",
+      "category": "Video",
+      "code": "VEO-2-CINEMA",
+      "remaining_percentage": 33,
+      "tokens_consumed_5h": 2,
+      "token_limit_5h": 3,
+      "total_limit": "3 renders",
+      "consumed": "2 renders",
+      "rpm_limit": 2,
+      "current_rpm": 0,
+      "tpm_limit": 20,
+      "current_tpm": 6,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 500,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829893_fae3ec07_g3fm",
+      "user_id": "user_1788464829893_fae3ec07",
+      "model_id": "g3fm",
+      "model_name": "Gemini 3 Flash (Thinking) - AGQ",
+      "category": "LLM",
+      "code": "G3FM-2026-PREVIEW",
+      "remaining_percentage": 15,
+      "tokens_consumed_5h": 850000,
+      "token_limit_5h": 1000000,
+      "total_limit": "1,000k tokens",
+      "consumed": "850k tokens",
+      "rpm_limit": 60,
+      "current_rpm": 24,
+      "tpm_limit": 1000000,
+      "current_tpm": 850000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 28,
+      "status": "critical",
+      "hourly_history": [
+        {
+          "hour": "14:00",
+          "tokens": 170000,
+          "requests": 12
+        },
+        {
+          "hour": "15:00",
+          "tokens": 255000,
+          "requests": 18
+        },
+        {
+          "hour": "16:00",
+          "tokens": 212500,
+          "requests": 15
+        },
+        {
+          "hour": "17:00",
+          "tokens": 127500,
+          "requests": 9
+        },
+        {
+          "hour": "18:00",
+          "tokens": 85000,
+          "requests": 6
+        }
+      ]
+    },
+    {
+      "id": "quota_user_1788464829893_fae3ec07_pro",
+      "user_id": "user_1788464829893_fae3ec07",
+      "model_id": "gemini-pro",
+      "model_name": "Gemini 3.0 Pro",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO",
+      "remaining_percentage": 82,
+      "tokens_consumed_5h": 120000,
+      "token_limit_5h": 2000000,
+      "total_limit": "2,000,000 tokens",
+      "consumed": "120k tokens",
+      "rpm_limit": 120,
+      "current_rpm": 12,
+      "tpm_limit": 2000000,
+      "current_tpm": 120000,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 180,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829893_fae3ec07_claude",
+      "user_id": "user_1788464829893_fae3ec07",
+      "model_id": "claude-sonnet",
+      "model_name": "Claude 3.7 Sonnet (Thinking)",
+      "category": "LLM",
+      "code": "CLAUDE-3-7-SONNET",
+      "remaining_percentage": 64,
+      "tokens_consumed_5h": 180000,
+      "token_limit_5h": 500000,
+      "total_limit": "500,000 tokens",
+      "consumed": "180k tokens",
+      "rpm_limit": 50,
+      "current_rpm": 8,
+      "tpm_limit": 500000,
+      "current_tpm": 180000,
+      "rolling_window_hours": 5,
+      "next_replenish_minutes": 110,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829893_fae3ec07_banana",
+      "user_id": "user_1788464829893_fae3ec07",
+      "model_id": "nano-banana",
+      "model_name": "Nano-Banana Image Diffusion",
+      "category": "Image",
+      "code": "NANO-BANANA-v2",
+      "remaining_percentage": 84,
+      "tokens_consumed_5h": 16,
+      "token_limit_5h": 100,
+      "total_limit": "100 credits",
+      "consumed": "16 credits",
+      "rpm_limit": 10,
+      "current_rpm": 1,
+      "tpm_limit": 100,
+      "current_tpm": 15,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 360,
+      "status": "optimal",
+      "hourly_history": []
+    },
+    {
+      "id": "quota_user_1788464829893_fae3ec07_veo",
+      "user_id": "user_1788464829893_fae3ec07",
+      "model_id": "veo-video",
+      "model_name": "Google Veo 2 / Flow Labs",
+      "category": "Video",
+      "code": "VEO-2-CINEMA",
+      "remaining_percentage": 70,
+      "tokens_consumed_5h": 6,
+      "token_limit_5h": 20,
+      "total_limit": "20 renders",
+      "consumed": "6 renders",
+      "rpm_limit": 2,
+      "current_rpm": 0,
+      "tpm_limit": 20,
+      "current_tpm": 6,
+      "rolling_window_hours": 24,
+      "next_replenish_minutes": 500,
+      "status": "optimal",
+      "hourly_history": []
+    }
+  ],
+  "chats": [
+    {
+      "id": "chat_adb_s21_session",
+      "user_id": "user_developer_power",
+      "device_id": "dev_s21_phone",
+      "device_name": "Samsung Galaxy S21+ 5G",
+      "title": "Samsung Galaxy S21+ ADB Session & Mirror Trajectory",
+      "category": "coding",
+      "model_used": "Gemini 3 Flash Thinking",
+      "total_turns": 141,
+      "total_tokens": 24149,
+      "messages": [
+        {
+          "role": "user",
+          "timestamp": "17:05",
+          "content": "Setup ADB connection with Galaxy S21+ and mirror screen."
+        },
+        {
+          "role": "assistant",
+          "timestamp": "17:06",
+          "content": "ADB device detected (ID: R5CR90...); started scrcpy mirror pipeline with 60fps streaming.",
+          "thought": "Checking USB debugging authorization and TCP connection."
+        }
+      ],
+      "created_at": "2026-09-03T19:46:40.525Z",
+      "updated_at": "2026-09-03T19:46:40.525Z"
+    },
+    {
+      "id": "chat_free_user_intro",
+      "user_id": "user_free_tester",
+      "device_id": "dev_free_laptop",
+      "device_name": "Acer Chromebook",
+      "title": "Introduction to Google Gemini 3 Flash Features",
+      "category": "general",
+      "model_used": "Gemini 3 Flash (Thinking)",
+      "total_turns": 4,
+      "total_tokens": 2400,
+      "messages": [
+        {
+          "role": "user",
+          "timestamp": "16:30",
+          "content": "What are the features included in the Google Free tier?"
+        },
+        {
+          "role": "assistant",
+          "timestamp": "16:31",
+          "content": "The Google Free tier includes 15 GB of pooled Google Cloud Storage, standard Gemini rate limits, and 15 daily Nano-Banana image credits."
+        }
+      ],
+      "created_at": "2026-09-03T19:46:40.525Z",
+      "updated_at": "2026-09-03T19:46:40.525Z"
+    }
+  ],
+  "images": [
+    {
+      "id": "img_1788464829899",
+      "user_id": "user_1788464829893_fae3ec07",
+      "device_id": "dev_1788464829894_f029ea",
+      "device_name": "Primary Web Console",
+      "prompt": "Cybernetic glowing neon reactor in 8k",
+      "aspect_ratio": "16:9",
+      "model": "Nano-Banana-v2",
+      "image_url": "https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?auto=format&fit=crop&w=1200&q=80",
+      "credits_used": 1,
+      "created_at": "2026-09-03T19:47:09.899Z"
+    },
+    {
+      "id": "img_cyberpunk_city",
+      "user_id": "user_developer_power",
+      "device_id": "dev_win_workstation",
+      "device_name": "Windows Studio Workstation",
+      "prompt": "Neon-lit cyberpunk server matrix with floating holographic data cubes in 8k octane render",
+      "aspect_ratio": "16:9",
+      "model": "Nano-Banana-v2",
+      "image_url": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+      "credits_used": 1,
+      "created_at": "2026-09-03T19:46:40.525Z"
+    }
+  ],
+  "videos": [
+    {
+      "id": "vid_quantum_space",
+      "user_id": "user_developer_power",
+      "device_id": "dev_win_workstation",
+      "device_name": "Windows Studio Workstation",
+      "prompt": "Hyper-speed dive into a crystalline nebula with glowing plasma streams, cinematic 60fps",
+      "engine": "Google Veo 2",
+      "status": "completed",
+      "progress": 100,
+      "video_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+      "duration_seconds": 5,
+      "created_at": "2026-09-03T19:46:40.525Z"
+    }
+  ],
+  "audit_logs": [
+    {
+      "id": "audit_init",
+      "admin_id": "user_admin_master",
+      "admin_email": "admin@antigravity.internal",
+      "action": "PLATFORM_INITIALIZATION",
+      "target_user_id": "SYSTEM",
+      "details": "Initialized Multi-Tenant Antigravity Omni-Meter PaaS Database Engine v1.0",
+      "timestamp": "2026-09-03T19:46:40.525Z"
+    }
+  ]
+}

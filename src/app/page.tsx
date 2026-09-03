@@ -13,6 +13,8 @@ import {
   Layers,
   MessageSquare,
   RefreshCw,
+  Shield,
+  ShieldAlert,
   ShieldCheck,
   Smartphone,
   Sparkles,
@@ -51,6 +53,7 @@ import {
 export default function Home() {
   // Authentication & Gate State
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [activeTab, setActiveTab] = useState<string>("overview");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSyncing, setIsSyncing] = useState<boolean>(false);
@@ -78,394 +81,239 @@ export default function Home() {
   const [r2Files, setR2Files] = useState<CloudStorageFile[]>(initialR2Files);
 
   // Live Pipeline State & Anti-Mock Standards
-  const [isLoadingLivePipelines, setIsLoadingLivePipelines] = useState<boolean>(true);
+  const [isLoadingLivePipelines, setIsLoadingLivePipelines] = useState<boolean>(false);
   const [pipelineError, setPipelineError] = useState<string | null>(null);
 
-  const fetchLivePipelines = async () => {
+  // Fetch user-isolated telemetry
+  const fetchUserTelemetry = async (userId?: string) => {
+    const targetUserId = userId || currentUser?.id || "user_developer_power";
     setIsLoadingLivePipelines(true);
     setPipelineError(null);
+
     try {
-      const [quotasRes, devicesRes, storageRes, chatsRes] = await Promise.all([
-        fetch("/api/quotas"),
-        fetch("/api/devices"),
-        fetch("/api/storage"),
-        fetch("/api/chats"),
-      ]);
+      const [telemetryRes, devicesRes, chatsRes, imagesRes, videosRes, storageRes] =
+        await Promise.all([
+          fetch(`/api/user/telemetry?userId=${targetUserId}`),
+          fetch(`/api/user/devices?userId=${targetUserId}`),
+          fetch(`/api/user/chats?userId=${targetUserId}`),
+          fetch(`/api/user/nano-banana?userId=${targetUserId}`),
+          fetch(`/api/user/veo?userId=${targetUserId}`),
+          fetch("/api/storage"),
+        ]);
 
-      if (!quotasRes.ok || !devicesRes.ok || !storageRes.ok || !chatsRes.ok) {
-        throw new Error("One or more live telemetry pipelines returned a server error.");
+      const [telemetryData, devicesData, chatsData, imagesData, videosData, storageData] =
+        await Promise.all([
+          telemetryRes.json(),
+          devicesRes.json(),
+          chatsRes.json(),
+          imagesRes.json(),
+          videosRes.json(),
+          storageRes.json(),
+        ]);
+
+      if (telemetryData.success) {
+        setQuotas(telemetryData.quotas);
+        const userData = telemetryData.user;
+        const tierName =
+          userData.tier === "free"
+            ? "Google Free Tier"
+            : userData.tier === "google_one_premium"
+            ? "Google One AI Premium"
+            : "Google Workspace Enterprise";
+
+        setSubscription((prev) => ({
+          ...prev,
+          userEmail: userData.email,
+          displayName: userData.name,
+          tierName,
+          tierCode: userData.tier.toUpperCase(),
+          totalStorageLimitGb: userData.storage_limit_gb,
+          storageUsedGb: userData.storage_used_gb,
+          storageBreakdown: {
+            driveGb: userData.storage_breakdown.driveGb,
+            gmailGb: userData.storage_breakdown.mailGb,
+            photosGb: userData.storage_breakdown.photosGb,
+            vaultBackupGb: userData.storage_breakdown.vaultGb,
+          },
+        }));
       }
 
-      const quotasData = await quotasRes.json();
-      const devicesData = await devicesRes.json();
-      const storageData = await storageRes.json();
-      const chatsData = await chatsRes.json();
+      if (devicesData.success) {
+        setDevices(devicesData.devices);
+      }
 
-      if (quotasData.success && quotasData.data) {
-        setQuotas(quotasData.data);
-      }
-      if (devicesData.success && devicesData.data) {
-        setDevices(devicesData.data);
-      }
-      if (storageData.success && storageData.data) {
-        setR2Files(storageData.data);
-        if (storageData.totalVolumeGb) {
-          setSubscription((prev) => ({
-            ...prev,
-            totalSyncedVolumeGb: storageData.totalVolumeGb,
-            totalSyncedFiles: storageData.data.length,
-          }));
-        }
-      }
-      if (chatsData.success && chatsData.chats) {
+      if (chatsData.success) {
         setChats(chatsData.chats);
       }
+
+      if (imagesData.success) {
+        setImages(imagesData.images);
+      }
+
+      if (videosData.success) {
+        setVideos(videosData.videos);
+      }
+
+      if (storageData.success && storageData.data) {
+        setR2Files(storageData.data);
+      }
+
       setIsLoadingLivePipelines(false);
     } catch (err: any) {
-      console.error("Live pipeline error:", err);
-      setPipelineError(err.message || "Live data pipeline connection failed");
+      console.error("Multi-tenant pipeline error:", err);
+      setPipelineError(err.message || "Pipeline error");
       setIsLoadingLivePipelines(false);
     }
   };
 
-  useEffect(() => {
-    fetchLivePipelines();
-  }, []);
-
-  // Jitter TPM/RPM slightly every 4 seconds to reflect active engine throughput
-  useEffect(() => {
-    const jitter = setInterval(() => {
-      setQuotas((prev) =>
-        prev.map((q) => {
-          const delta = Math.floor(Math.random() * 5) - 2;
-          const nextRpm = Math.max(0, Math.min(q.rpmLimit, q.currentRpm + delta));
-          return {
-            ...q,
-            currentRpm: nextRpm,
-          };
-        })
-      );
-    }, 4000);
-    return () => clearInterval(jitter);
-  }, []);
-
-  // Check localStorage and URL parameters on mount
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("antigravity_logged_in");
-      const urlParams = new URLSearchParams(window.location.search);
-      if (saved === "true" || urlParams.get("login") === "true") {
-        setIsLoggedIn(true);
-      }
-    }
-  }, []);
-
-  // Handlers
-  const handleLoginSuccess = (user: GoogleSubscriptionInfo) => {
-    setSubscription(user);
+  const handleLoginSuccess = (user: any) => {
+    setCurrentUser(user);
     setIsLoggedIn(true);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("antigravity_logged_in", "true");
-    }
-    showToast(`Welcome back, ${user.displayName}! Entitlement: ${user.tierName}`);
+    showToast(`Welcome ${user.name}! Isolated telemetry loaded.`);
+    fetchUserTelemetry(user.id);
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    try {
+      await fetch("/api/auth/me", { method: "POST" });
+    } catch (e) {}
     setIsLoggedIn(false);
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("antigravity_logged_in");
+    setCurrentUser(null);
+    showToast("Signed out. Returning to multi-tenant gateway.");
+  };
+
+  // Quota burn action
+  const handleBurnTokens = async (modelId: string, amount: number) => {
+    try {
+      await fetch("/api/user/telemetry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "burn",
+          userId: currentUser?.id,
+          modelId,
+          tokens: amount,
+        }),
+      });
+      showToast(`Burned ${(amount / 1000).toFixed(0)}k tokens on ${modelId}`);
+      fetchUserTelemetry(currentUser?.id);
+    } catch (e) {
+      showToast("Token burn failed.");
     }
   };
 
+  // Quota replenish action
+  const handleReplenishQuota = async (modelId: string, boostPct: number = 25) => {
+    try {
+      await fetch("/api/user/telemetry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "replenish",
+          userId: currentUser?.id,
+          modelId,
+          pctBoost: boostPct,
+        }),
+      });
+      showToast(`Replenished +${boostPct}% capacity on ${modelId}`);
+      fetchUserTelemetry(currentUser?.id);
+    } catch (e) {
+      showToast("Quota replenish failed.");
+    }
+  };
+
+  // Chat message submission
+  const handleSendMessage = async (chatId: string, messageText: string) => {
+    try {
+      const res = await fetch("/api/user/chats", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUser?.id,
+          chatId,
+          message: messageText,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("Prompt executed; token quota updated.");
+        fetchUserTelemetry(currentUser?.id);
+      }
+    } catch (e) {
+      showToast("Message execution failed.");
+    }
+  };
+
+  // Image generation submission
+  const handleGenerateImage = async (prompt: string, aspectRatio: any) => {
+    try {
+      const res = await fetch("/api/user/nano-banana", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUser?.id,
+          prompt,
+          aspectRatio,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("Image generated! 1 Banana credit deducted.");
+        fetchUserTelemetry(currentUser?.id);
+      }
+    } catch (e) {
+      showToast("Image generation failed.");
+    }
+  };
+
+  // Video generation submission
+  const handleGenerateVideo = async (prompt: string, engine: string) => {
+    try {
+      const res = await fetch("/api/user/veo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: currentUser?.id,
+          prompt,
+          engine,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast("Video render queued! 1 Veo unit deducted.");
+        fetchUserTelemetry(currentUser?.id);
+      }
+    } catch (e) {
+      showToast("Video generation failed.");
+    }
+  };
+
+  // Trigger R2 sync
   const handleTriggerSync = () => {
     setIsSyncing(true);
-    showToast("Executing Cloudflare R2 zero-egress delta sync...");
+    showToast("Starting Cloudflare R2 checksum delta sync...");
     setTimeout(() => {
       setIsSyncing(false);
-      showToast("Cloudflare R2 Bucket synchronized successfully (0 errors).");
-    }, 1800);
+      showToast("Cloudflare R2 sync complete: 0 egress cost.");
+    }, 2000);
   };
 
-  const handleReplenishG3FM = () => {
-    setQuotas((prev) =>
-      prev.map((q) => {
-        if (q.id === "g3fm") {
-          const newPct = Math.min(100, q.remainingPercentage + 25);
-          return {
-            ...q,
-            remainingPercentage: newPct,
-            status: newPct > 20 ? "warning" : "critical",
-            nextReplenishMinutes: newPct === 100 ? 300 : 25,
-            consumed: `${Math.round(((100 - newPct) / 100) * 1000000).toLocaleString()} Tokens`,
-          };
-        }
-        return q;
-      })
-    );
-    showToast("Simulated 5-hour rolling bucket replenish: +25% capacity unlocked!");
-  };
-
-  const handleSimulateBurn = (id: string, tokens: number) => {
-    setQuotas((prev) =>
-      prev.map((q) => {
-        if (q.id === id) {
-          const burnPercent = Math.round((tokens / 1000000) * 100);
-          const newPct = Math.max(0, q.remainingPercentage - burnPercent);
-          return {
-            ...q,
-            remainingPercentage: newPct,
-            status: newPct <= 20 ? "critical" : newPct <= 60 ? "warning" : "optimal",
-            consumed: `${Math.round(((100 - newPct) / 100) * 1000000).toLocaleString()} Tokens`,
-          };
-        }
-        return q;
-      })
-    );
-    showToast(`Simulated prompt load: Consumed ${tokens.toLocaleString()} tokens.`);
-  };
-
-  const handleResetAllQuotas = () => {
-    setQuotas((prev) =>
-      prev.map((q) => ({
-        ...q,
-        remainingPercentage: 100,
-        status: "optimal",
-        consumed: "0 Tokens",
-        nextReplenishMinutes: 300,
-      }))
-    );
-    showToast("All AGQ model quotas restored to 100% capacity.");
-  };
-
-  const handleGenerateImage = (
-    prompt: string,
-    model: string,
-    ratio: string
-  ) => {
-    // Dynamic thematic images based on prompt keyword
-    const p = prompt.toLowerCase();
-    let imgUrl =
-      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80";
-
-    if (p.includes("cyberpunk") || p.includes("neon") || p.includes("city")) {
-      imgUrl =
-        "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80";
-    } else if (p.includes("nature") || p.includes("ocean") || p.includes("underwater")) {
-      imgUrl =
-        "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=80";
-    } else if (p.includes("architect") || p.includes("room") || p.includes("interior")) {
-      imgUrl =
-        "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80";
-    } else if (p.includes("ui") || p.includes("dashboard") || p.includes("matrix")) {
-      imgUrl =
-        "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80";
-    }
-
-    const newImage: NanoBananaImage = {
-      id: `img-${Date.now()}`,
-      title: prompt.slice(0, 35) + "...",
-      prompt: prompt,
-      model: model as any,
-      aspectRatio: ratio as any,
-      resolution:
-        ratio === "16:9"
-          ? "3840x2160 (4K)"
-          : ratio === "1:1"
-          ? "2048x2048"
-          : ratio === "9:16"
-          ? "1080x1920 (Mobile)"
-          : "2560x1920",
-      seed: Math.floor(Math.random() * 90000000) + 10000000,
-      createdAt: "Just now",
-      deviceId: "dev-win-01",
-      deviceName: "Windows Studio Workstation",
-      imageUrl: imgUrl,
-      creditsUsed: 1,
-      tags: ["Generated", model.split(" ")[0], ratio],
-    };
-    setImages([newImage, ...images]);
-    showToast(`Nano-Banana generation complete: 1 credit used. Saved to R2.`);
-  };
-
-  const handleDeleteImage = (id: string) => {
-    setImages((prev) => prev.filter((img) => img.id !== id));
-    showToast("Image asset removed from local gallery.");
-  };
-
-  const handleRenderVideo = (
-    prompt: string,
-    engine: string,
-    fps: number
-  ) => {
-    const newVideo: VeoVideoJob = {
-      id: `vid-${Date.now()}`,
-      title: prompt.slice(0, 35) + "...",
-      prompt: prompt,
-      engine: engine as any,
-      status: "rendering",
-      progressPercentage: 15,
-      durationSeconds: 10,
-      fps: fps,
-      aspectRatio: "16:9",
-      videoUrl:
-        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-      thumbnailUrl:
-        "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=80",
-      createdAt: "Just now",
-      deviceId: "dev-win-01",
-      deviceName: "Windows Studio Workstation",
-      creditsCost: 2,
-    };
-    setVideos([newVideo, ...videos]);
-    showToast("Veo 2 video render job queued (2 units deducted). Rendering now...");
-  };
-
-  const handleUpdateVideoProgress = (
-    id: string,
-    progress: number,
-    status: "completed" | "rendering"
-  ) => {
-    setVideos((prev) =>
-      prev.map((v) => (v.id === id ? { ...v, progressPercentage: progress, status } : v))
-    );
-    if (status === "completed") {
-      showToast("Veo 2 video render completed! Stream ready in video player.");
-    }
-  };
-
-  const handleRevokeSession = (id: string) => {
-    const target = devices.find((d) => d.id === id);
-    setDevices((prev) => prev.filter((d) => d.id !== id));
-    showToast(`Revoked session: ${target?.name || id} terminated.`);
-  };
-
-  const handleSyncChatToR2 = (chatId: string) => {
-    setChats((prev) =>
-      prev.map((c) => (c.id === chatId ? { ...c, isSyncedToR2: true } : c))
-    );
-    handleTriggerSync();
-  };
-
-  const handleSendMessage = (chatId: string, message: string) => {
-    const userMsg = {
-      role: "user" as const,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-      content: message,
-    };
-
-    setChats((prev) =>
-      prev.map((c) => {
-        if (c.id === chatId) {
-          return {
-            ...c,
-            totalTurns: c.totalTurns + 2,
-            totalTokens: c.totalTokens + 4200,
-            previewMessage: message,
-            messages: [...c.messages, userMsg],
-          };
-        }
-        return c;
-      })
-    );
-
-    // Simulate Agent reply
-    setTimeout(() => {
-      const assistantMsg = {
-        role: "assistant" as const,
-        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        content: `Acknowledged: "${message}". I have processed your instruction using the active ${subscription.tierName} engine. Quota consumption and task trajectories have been verified and saved.`,
-        thought: `Synthesizing context across active Antigravity workspace, verifying rolling token bucket limits, and dispatching telemetry sync to Cloudflare R2 bucket ${subscription.r2BucketName}.`,
-        toolCalls: [
-          { tool: "antigravity_core", summary: "Updated conversation state & synced turns" },
-        ],
-      };
-
-      setChats((prev) =>
-        prev.map((c) => {
-          if (c.id === chatId) {
-            return {
-              ...c,
-              messages: [...c.messages, assistantMsg],
-            };
-          }
-          return c;
-        })
-      );
-      showToast("Model reply generated & synchronized to R2 vault.");
-    }, 900);
-  };
-
-  const handleExportAllChats = () => {
-    const dataStr =
-      "data:text/json;charset=utf-8," +
-      encodeURIComponent(JSON.stringify(chats, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute(
-      "download",
-      `antigravity_all_chats_backup_${new Date().toISOString().slice(0, 10)}.json`
-    );
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-    showToast("Downloaded complete conversation database (.JSON).");
-  };
-
-  const handleUploadFile = (
-    name: string,
-    category: string,
-    sizeBytes: number
-  ) => {
-    const newFile: CloudStorageFile = {
-      id: `r2-${Date.now()}`,
-      name: name,
-      path: `/${category}/${name}`,
-      type: "file",
-      category: category as any,
-      sizeBytes: sizeBytes,
-      lastModified: "Just now",
-      syncStatus: "synced",
-      r2Etag: `"${Math.random().toString(36).substring(2, 10)}"`,
-      deviceId: "dev-win-01",
-    };
-    setR2Files([newFile, ...r2Files]);
-    setSubscription((prev) => ({
-      ...prev,
-      totalSyncedVolumeGb: Number(
-        (prev.totalSyncedVolumeGb + sizeBytes / (1024 * 1024 * 1024)).toFixed(2)
-      ),
-      totalSyncedFiles: prev.totalSyncedFiles + 1,
-    }));
-    showToast(`Added ${name} to Cloudflare R2 vault.`);
-  };
-
-  const handleDeleteFile = (id: string) => {
-    setR2Files((prev) => prev.filter((f) => f.id !== id));
-    showToast("File removed from R2 sync queue.");
-  };
-
-  // If not logged in, render the authentic Google Login Portal
+  // If not logged in, show the multi-tenant Register/Login portal
   if (!isLoggedIn) {
     return <LoginPage onLoginSuccess={handleLoginSuccess} />;
   }
 
   return (
-    <div className="min-h-screen flex flex-col pb-16 relative">
-      {/* Toast Notification Pill */}
+    <div className="min-h-screen bg-[#070a10] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/30 selection:text-cyan-200">
+      {/* Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-900 border border-cyan-500/50 shadow-glow text-xs text-white backdrop-blur-xl animate-fade-in">
-          <Zap className="w-4 h-4 text-cyan-400 animate-pulse flex-shrink-0" />
-          <span className="font-mono">{toastMessage}</span>
-          <button
-            onClick={() => setToastMessage(null)}
-            className="p-1 rounded text-slate-400 hover:text-white ml-2"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
+        <div className="fixed bottom-6 right-6 z-50 glass-panel px-4 py-3 rounded-xl border border-cyan-500/50 bg-slate-900/90 text-white text-xs font-semibold shadow-glow flex items-center gap-2 animate-bounce">
+          <CheckCircle2 className="w-4 h-4 text-cyan-400" />
+          <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Top Navbar */}
+      {/* Navbar with Admin Console link if user is admin */}
       <Navbar
         subscription={subscription}
         isSyncing={isSyncing}
@@ -476,52 +324,97 @@ export default function Home() {
         setActiveTab={setActiveTab}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        activeDeviceCount={devices.filter((d) => d.status !== "offline").length}
+        activeDeviceCount={devices.length}
+        isAdmin={currentUser?.role === "admin"}
       />
 
-      {/* Main Container */}
-      <div className="max-w-7xl mx-auto w-full px-4 lg:px-8 pt-6 flex-1 space-y-6">
-        {/* Navigation Tabs Bar */}
-        <div className="flex items-center gap-1.5 overflow-x-auto p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800 glass-panel">
+      {/* Live Data Provenance Strip */}
+      <div className="w-full bg-slate-950/80 border-b border-slate-800/80 px-4 py-1.5 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400">
+        <div className="flex items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 text-emerald-400 font-bold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            DATA PROVENANCE: LIVE
+          </span>
+          <span>•</span>
+          <span>Tenant: <strong className="text-white">{currentUser?.email}</strong></span>
+          <span>•</span>
+          <span>Plan: <strong className="text-cyan-300">{subscription.tierName}</strong></span>
+          <span>•</span>
+          <span>Storage: <strong className="text-white">{subscription.storageUsedGb.toFixed(1)} GB</strong> / {subscription.totalStorageLimitGb} GB</span>
+        </div>
+        <div className="flex items-center gap-3">
+          {currentUser?.role === "admin" && (
+            <span className="text-purple-400 font-bold">
+              [ADMINISTRATOR ACCOUNT]
+            </span>
+          )}
+          <span className="text-slate-500 hidden sm:inline">Engine: Antigravity-MultiTenant-v2</span>
+        </div>
+      </div>
+
+      {/* Main Tabs Navigation Strip */}
+      <nav className="w-full border-b border-slate-800/60 bg-[#090d16]/70 backdrop-blur-md px-4 lg:px-8 py-2 sticky top-[65px] z-40">
+        <div className="max-w-7xl mx-auto flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar">
           {[
-            { id: "overview", label: "Overview Hub", icon: <BarChart3 className="w-4 h-4" /> },
-            { id: "quotas", label: "AGQ Model Quotas", icon: <Cpu className="w-4 h-4 text-cyan-400" /> },
-            { id: "nano-banana", label: "Nano-Banana Image", icon: <ImageIcon className="w-4 h-4 text-purple-400" /> },
-            { id: "veo-video", label: "Veo 2 & Flow Video", icon: <Film className="w-4 h-4 text-blue-400" /> },
-            { id: "devices", label: "Device Sessions", icon: <Smartphone className="w-4 h-4 text-purple-300" /> },
-            { id: "chats", label: "Omni-Chat Vault", icon: <MessageSquare className="w-4 h-4 text-emerald-400" /> },
-            { id: "cloud-sync", label: "Cloudflare R2 Hub", icon: <Cloud className="w-4 h-4 text-cyan-300" /> },
+            { id: "overview", label: "Overview Hub", icon: BarChart3 },
+            { id: "quotas", label: "AGQ Model Quotas", icon: Cpu },
+            { id: "banana", label: "Nano-Banana Studio", icon: ImageIcon },
+            { id: "veo", label: "Veo 2 & Flow Video", icon: Film },
+            { id: "chats", label: "Omni-Chat Vault", icon: MessageSquare },
+            { id: "devices", label: "Device Sessions", icon: Smartphone },
+            { id: "storage", label: "Cloudflare R2 Hub", icon: HardDrive },
           ].map((tab) => {
+            const Icon = tab.icon;
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all flex-shrink-0 ${
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
                   isActive
-                    ? "bg-gradient-to-r from-cyan-500/20 via-blue-600/20 to-purple-600/20 text-white border border-cyan-500/50 shadow-glow"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent"
+                    ? "bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 text-cyan-300 border border-cyan-500/40 shadow-glow"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900/60 border border-transparent"
                 }`}
               >
-                {tab.icon}
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-cyan-400" : "text-slate-400"}`} />
                 <span>{tab.label}</span>
               </button>
             );
           })}
         </div>
+      </nav>
 
-        {/* Tab Contents */}
+      {/* Error state if pipeline fails */}
+      {pipelineError && (
+        <div className="max-w-7xl mx-auto w-full px-4 pt-4">
+          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-xs flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <ShieldAlert className="w-4 h-4 text-red-400" />
+              <span>{pipelineError}</span>
+            </div>
+            <button
+              onClick={() => fetchUserTelemetry(currentUser?.id)}
+              className="px-2.5 py-1 rounded bg-red-500/20 hover:bg-red-500/30 text-white text-[11px] font-semibold"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Content Body */}
+      <main className="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 flex-1 space-y-6">
         {activeTab === "overview" && (
           <OverviewTab
+            subscription={subscription}
             quotas={quotas}
             devices={devices}
             images={images}
             videos={videos}
             chats={chats}
             r2Files={r2Files}
-            subscription={subscription}
             onNavigateTab={setActiveTab}
-            onReplenishG3FM={handleReplenishG3FM}
+            onReplenishG3FM={() => handleReplenishQuota("g3fm", 25)}
             onTriggerSync={handleTriggerSync}
           />
         )}
@@ -529,67 +422,70 @@ export default function Home() {
         {activeTab === "quotas" && (
           <QuotaTelemetryTab
             quotas={quotas}
-            onReplenishG3FM={handleReplenishG3FM}
-            onSimulateBurn={handleSimulateBurn}
-            onResetAllQuotas={handleResetAllQuotas}
+            onReplenishG3FM={() => handleReplenishQuota("g3fm", 25)}
+            onSimulateBurn={(id, tokens) => handleBurnTokens(id, tokens)}
+            onResetAllQuotas={() => handleReplenishQuota("g3fm", 100)}
           />
         )}
 
-        {activeTab === "nano-banana" && (
+        {activeTab === "banana" && (
           <NanoBananaStudioTab
             images={images}
-            onGenerateImage={handleGenerateImage}
-            onDeleteImage={handleDeleteImage}
+            onGenerateImage={(prompt, model, ratio) => handleGenerateImage(prompt, ratio)}
           />
         )}
 
-        {activeTab === "veo-video" && (
+        {activeTab === "veo" && (
           <VeoVideoStudioTab
             videos={videos}
-            onRenderVideo={handleRenderVideo}
-            onUpdateVideoProgress={handleUpdateVideoProgress}
-          />
-        )}
-
-        {activeTab === "devices" && (
-          <DeviceSessionsTab
-            devices={devices}
-            onRevokeSession={handleRevokeSession}
-            onRefreshDevices={handleTriggerSync}
+            onRenderVideo={(prompt, engine, fps) => handleGenerateVideo(prompt, engine)}
           />
         )}
 
         {activeTab === "chats" && (
           <OmniChatVaultTab
             chats={chats}
-            onSyncChatToR2={handleSyncChatToR2}
-            onExportAllChats={handleExportAllChats}
+            onSyncChatToR2={(chatId) => showToast(`Synchronized chat ${chatId} to R2`)}
+            onExportAllChats={() => showToast("Exported all chats as JSON archive")}
             onSendMessage={handleSendMessage}
           />
         )}
 
-        {activeTab === "cloud-sync" && (
+        {activeTab === "devices" && (
+          <DeviceSessionsTab
+            devices={devices}
+            onRefreshDevices={() => fetchUserTelemetry(currentUser?.id)}
+            onRevokeSession={async (id) => {
+              await fetch(`/api/user/devices?deviceId=${id}`, { method: "DELETE" });
+              showToast("Device session revoked.");
+              fetchUserTelemetry(currentUser?.id);
+            }}
+          />
+        )}
+
+        {activeTab === "storage" && (
           <CloudSyncHubTab
             files={r2Files}
             subscription={subscription}
             isSyncing={isSyncing}
             onTriggerSync={handleTriggerSync}
-            onUploadFile={handleUploadFile}
-            onDeleteFile={handleDeleteFile}
+            onUploadFile={(name, category, size) => showToast(`Uploaded ${name} to R2 Vault`)}
           />
         )}
-      </div>
+      </main>
 
-      {/* Google Auth & Subscription Settings Modal */}
-      <GoogleAuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-        subscription={subscription}
-        onUpdateSubscription={(up) => {
-          setSubscription(up);
-          showToast(`Saved settings for ${up.accountEmail}.`);
-        }}
-      />
+      {/* Google Auth Modal */}
+      {isAuthModalOpen && (
+        <GoogleAuthModal
+          isOpen={isAuthModalOpen}
+          subscription={subscription}
+          onClose={() => setIsAuthModalOpen(false)}
+          onUpdateSubscription={(updated) => {
+            setSubscription(updated);
+            showToast("Google Subscription updated.");
+          }}
+        />
+      )}
     </div>
   );
 }

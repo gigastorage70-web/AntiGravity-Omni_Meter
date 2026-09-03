@@ -31,9 +31,9 @@ export const GoogleAuthModal: React.FC<GoogleAuthModalProps> = ({
   subscription,
   onUpdateSubscription,
 }) => {
-  const [selectedTier, setSelectedTier] = useState<
-    "Google One AI Premium" | "Google Workspace AI" | "Vertex Enterprise"
-  >(subscription.tierName);
+  const [selectedTier, setSelectedTier] = useState<string>(
+    subscription.tierName
+  );
   const [r2BucketInput, setR2BucketInput] = useState<string>(
     subscription.r2BucketName
   );

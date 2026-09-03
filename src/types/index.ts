@@ -135,14 +135,29 @@ export type CloudStorageFile = {
 
 export type GoogleSubscriptionInfo = {
   accountEmail: string;
+  userEmail?: string;
   displayName: string;
   avatarUrl: string;
-  tierName: "Google One AI Premium" | "Google Workspace AI" | "Vertex Enterprise";
+  tierName:
+    | "Google One AI Premium"
+    | "Google Workspace AI"
+    | "Vertex Enterprise"
+    | "Google Free Tier"
+    | "Google Workspace Enterprise"
+    | string;
+  tierCode?: string;
   renewalDate: string;
   storageUsedGb: number;
   storageLimitGb: number;
+  totalStorageLimitGb?: number;
+  storageBreakdown?: {
+    driveGb: number;
+    gmailGb: number;
+    photosGb: number;
+    vaultBackupGb: number;
+  };
   cloudFlareR2Status: "connected" | "syncing" | "paused";
-  r2BucketName: "antigravity-vault-us-east";
+  r2BucketName: "antigravity-vault-us-east" | string;
   totalSyncedFiles: number;
   totalSyncedVolumeGb: number;
   provenance?: ProvenanceTag;

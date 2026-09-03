@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import {
   Activity,
   Cloud,
@@ -8,6 +9,7 @@ import {
   LogOut,
   RefreshCw,
   Search,
+  Shield,
   ShieldCheck,
   Smartphone,
   User,
@@ -26,6 +28,7 @@ interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   activeDeviceCount: number;
+  isAdmin?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -39,6 +42,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   searchQuery,
   setSearchQuery,
   activeDeviceCount,
+  isAdmin = false,
 }) => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-[#080c14]/85 backdrop-blur-xl px-4 lg:px-8 py-3 transition-all">
@@ -59,11 +63,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 ANTIGRAVITY
               </span>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
-                CLOUD HUB
+                OMNI-METER
               </span>
             </div>
             <p className="text-[11px] text-slate-400 hidden sm:block">
-              Live Quotas • Nano-Banana • Veo 2 • Cloudflare R2 Sync
+              Multi-Tenant Cloud Command Center • Isolated User Telemetry
             </p>
           </div>
         </div>
@@ -80,8 +84,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           />
         </div>
 
-        {/* Right: Cloud Sync, Tier Status, Google Auth & Sign Out */}
+        {/* Right: Cloud Sync, Admin Console Link, Tier Status, Google Auth & Sign Out */}
         <div className="flex items-center gap-3">
+          {/* Universal Admin Console Quick Access */}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 border border-purple-500/40 text-purple-200 text-xs font-bold transition-all shadow-glow"
+            >
+              <Shield className="w-3.5 h-3.5 text-purple-400" />
+              <span>Admin Console</span>
+            </Link>
+          )}
+
           {/* Cloudflare R2 Sync Pill */}
           <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs">
             <div className="relative flex items-center justify-center">
@@ -93,7 +108,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               R2 Vault:
             </span>
             <span className="text-cyan-400 font-semibold">
-              {isSyncing ? "Syncing Delta..." : "Synchronized"}
+              {isSyncing ? "Syncing..." : "Synchronized"}
             </span>
             <button
               onClick={onTriggerSync}
