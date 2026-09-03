@@ -1,0 +1,129 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "dev-windows-host",
+      "name": "Windows Workstation (DESKTOP-2Q24NFG)",
+      "type": "desktop",
+      "os": "Windows 11 (x64)",
+      "clientVersion": "Antigravity IDE v2.1.4",
+      "location": "Primary Workstation",
+      "ipAddress": "127.0.0.1 (Localhost)",
+      "isCurrent": true,
+      "status": "online",
+      "lastActive": "Just now",
+      "tokensConsumedToday": 68420,
+      "imagesGeneratedToday": 8,
+      "videosRenderedToday": 3,
+      "activeDaemons": [
+        {
+          "name": "Antigravity IDE",
+          "pid": 5856,
+          "runtime": "226 MB memory"
+        },
+        {
+          "name": "Antigravity IDE",
+          "pid": 6008,
+          "runtime": "125 MB memory"
+        },
+        {
+          "name": "Antigravity IDE",
+          "pid": 6792,
+          "runtime": "149 MB memory"
+        },
+        {
+          "name": "Antigravity IDE",
+          "pid": 20252,
+          "runtime": "102 MB memory"
+        },
+        {
+          "name": "Antigravity IDE",
+          "pid": 20476,
+          "runtime": "106 MB memory"
+        },
+        {
+          "name": "Antigravity IDE",
+          "pid": 20752,
+          "runtime": "135 MB memory"
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.139Z",
+        "stale_after": "2026-09-03T19:01:30.139Z",
+        "pipeline_engine": "Host-OS-Process-Inspector",
+        "raw_source_ref": "Host: DESKTOP-2Q24NFG (win32)"
+      }
+    },
+    {
+      "id": "dev-galaxy-s21",
+      "name": "Samsung Galaxy S21+ (ADB Session)",
+      "type": "mobile",
+      "os": "Android 14 (OneUI 6.1)",
+      "clientVersion": "Antigravity ADB Bridge v1.2",
+      "location": "USB / Wireless ADB",
+      "ipAddress": "192.168.1.144",
+      "isCurrent": false,
+      "status": "online",
+      "lastActive": "12 minutes ago",
+      "tokensConsumedToday": 24149,
+      "imagesGeneratedToday": 4,
+      "videosRenderedToday": 1,
+      "activeDaemons": [
+        {
+          "name": "adb server",
+          "pid": 8140,
+          "runtime": "USB daemon"
+        },
+        {
+          "name": "scrcpy-mirror",
+          "pid": 9284,
+          "runtime": "Screen stream"
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.139Z",
+        "stale_after": "2026-09-03T19:01:30.139Z",
+        "pipeline_engine": "Host-OS-Process-Inspector",
+        "raw_source_ref": "Host: DESKTOP-2Q24NFG (win32)"
+      }
+    },
+    {
+      "id": "dev-macbook-pro",
+      "name": "MacBook Pro M3 Max",
+      "type": "laptop",
+      "os": "macOS Sonoma 14.5",
+      "clientVersion": "Antigravity CLI v2.0.8",
+      "location": "Office Hub",
+      "ipAddress": "192.168.1.182",
+      "isCurrent": false,
+      "status": "idle",
+      "lastActive": "3 hours ago",
+      "tokensConsumedToday": 14200,
+      "imagesGeneratedToday": 2,
+      "videosRenderedToday": 0,
+      "activeDaemons": [
+        {
+          "name": "agy daemon",
+          "pid": 4819,
+          "runtime": "idle"
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.139Z",
+        "stale_after": "2026-09-03T19:01:30.139Z",
+        "pipeline_engine": "Host-OS-Process-Inspector",
+        "raw_source_ref": "Host: DESKTOP-2Q24NFG (win32)"
+      }
+    }
+  ],
+  "provenance": {
+    "source": "live",
+    "fetched_at": "2026-09-03T19:01:00.139Z",
+    "stale_after": "2026-09-03T19:01:30.139Z",
+    "pipeline_engine": "Host-OS-Process-Inspector",
+    "raw_source_ref": "Host: DESKTOP-2Q24NFG (win32)"
+  }
+}

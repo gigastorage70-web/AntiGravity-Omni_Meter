@@ -1,0 +1,308 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "g3fm",
+      "name": "Gemini 3 Flash (Thinking) - AGQ",
+      "category": "LLM",
+      "code": "G3FM-2026-PREVIEW",
+      "remainingPercentage": 96,
+      "totalLimit": "1,000,000 tokens",
+      "consumed": "37.4k tokens",
+      "unit": "Tokens / 5h Sliding Bucket",
+      "rpmLimit": 60,
+      "currentRpm": 26,
+      "tpmLimit": 1000000,
+      "currentTpm": 37375,
+      "rollingWindowHours": 5,
+      "nextReplenishMinutes": 45,
+      "resetMode": "rolling",
+      "status": "optimal",
+      "hourlyHistory": [
+        {
+          "hour": "20:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "21:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "22:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "23:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "00:00",
+          "tokens": 6229,
+          "requests": 43
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:00:59.648Z",
+        "stale_after": "2026-09-03T19:01:59.648Z",
+        "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+        "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+        "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+      }
+    },
+    {
+      "id": "gemini-pro",
+      "name": "Gemini 3.0 Pro Enterprise",
+      "category": "LLM",
+      "code": "GEMINI-3.0-PRO-EXP",
+      "remainingPercentage": 82,
+      "totalLimit": "2,000,000 tokens",
+      "consumed": "360k tokens",
+      "unit": "Tokens / Minute Pool",
+      "rpmLimit": 120,
+      "currentRpm": 18,
+      "tpmLimit": 2000000,
+      "currentTpm": 360000,
+      "rollingWindowHours": 24,
+      "nextReplenishMinutes": 240,
+      "resetMode": "daily_utc",
+      "status": "optimal",
+      "hourlyHistory": [
+        {
+          "hour": "20:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "21:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "22:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "23:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "00:00",
+          "tokens": 6229,
+          "requests": 43
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:00:59.648Z",
+        "stale_after": "2026-09-03T19:01:59.648Z",
+        "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+        "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+        "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+      }
+    },
+    {
+      "id": "claude-sonnet",
+      "name": "Claude 3.7 Sonnet (Thinking)",
+      "category": "LLM",
+      "code": "CLAUDE-3-7-SONNET",
+      "remainingPercentage": 64,
+      "totalLimit": "500,000 tokens",
+      "consumed": "180k tokens",
+      "unit": "Tokens / 5h Sliding Bucket",
+      "rpmLimit": 50,
+      "currentRpm": 12,
+      "tpmLimit": 500000,
+      "currentTpm": 180000,
+      "rollingWindowHours": 5,
+      "nextReplenishMinutes": 110,
+      "resetMode": "rolling",
+      "status": "optimal",
+      "hourlyHistory": [
+        {
+          "hour": "20:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "21:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "22:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "23:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "00:00",
+          "tokens": 6229,
+          "requests": 43
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:00:59.648Z",
+        "stale_after": "2026-09-03T19:01:59.648Z",
+        "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+        "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+        "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+      }
+    },
+    {
+      "id": "nano-banana",
+      "name": "Nano-Banana Image Generation",
+      "category": "Image",
+      "code": "NANO-BANANA-DIFFUSION-v2",
+      "remainingPercentage": 85,
+      "totalLimit": "100 credits",
+      "consumed": "15 credits",
+      "unit": "Generations / Day",
+      "rpmLimit": 10,
+      "currentRpm": 1,
+      "tpmLimit": 100,
+      "currentTpm": 15,
+      "rollingWindowHours": 24,
+      "nextReplenishMinutes": 380,
+      "resetMode": "daily_utc",
+      "status": "optimal",
+      "hourlyHistory": [
+        {
+          "hour": "20:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "21:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "22:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "23:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "00:00",
+          "tokens": 6229,
+          "requests": 43
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:00:59.648Z",
+        "stale_after": "2026-09-03T19:01:59.648Z",
+        "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+        "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+        "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+      }
+    },
+    {
+      "id": "veo-video",
+      "name": "Google Veo 2 / Flow Labs",
+      "category": "Video",
+      "code": "VEO-2-CINEMATIC-60FPS",
+      "remainingPercentage": 70,
+      "totalLimit": "20 renders",
+      "consumed": "6 renders",
+      "unit": "Video Jobs / Day",
+      "rpmLimit": 2,
+      "currentRpm": 0,
+      "tpmLimit": 20,
+      "currentTpm": 6,
+      "rollingWindowHours": 24,
+      "nextReplenishMinutes": 520,
+      "resetMode": "daily_utc",
+      "status": "optimal",
+      "hourlyHistory": [
+        {
+          "hour": "20:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "21:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "22:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "23:00",
+          "tokens": 6229,
+          "requests": 43
+        },
+        {
+          "hour": "00:00",
+          "tokens": 6229,
+          "requests": 43
+        }
+      ],
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:00:59.648Z",
+        "stale_after": "2026-09-03T19:01:59.648Z",
+        "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+        "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+        "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+      }
+    }
+  ],
+  "totalWindowTokens": 0,
+  "activeWindowStart": "2026-09-03T14:00:59.648Z",
+  "nextReplenishMinutes": 45,
+  "hourlyHistory": [
+    {
+      "hour": "20:00",
+      "tokens": 6229,
+      "requests": 43
+    },
+    {
+      "hour": "21:00",
+      "tokens": 6229,
+      "requests": 43
+    },
+    {
+      "hour": "22:00",
+      "tokens": 6229,
+      "requests": 43
+    },
+    {
+      "hour": "23:00",
+      "tokens": 6229,
+      "requests": 43
+    },
+    {
+      "hour": "00:00",
+      "tokens": 6229,
+      "requests": 43
+    }
+  ],
+  "provenance": {
+    "source": "live",
+    "fetched_at": "2026-09-03T19:00:59.648Z",
+    "stale_after": "2026-09-03T19:01:59.648Z",
+    "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+    "raw_source_ref": "session-e1528e1e.jsonl, transcript.jsonl, transcript_full.jsonl",
+    "data_hash": "e1484634658c1ee057d19daf4807d742391a44cfcb5e3239fc86a1596c371ea4"
+  }
+}

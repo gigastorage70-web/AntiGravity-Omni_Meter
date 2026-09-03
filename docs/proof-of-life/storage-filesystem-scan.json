@@ -1,0 +1,73 @@
+{
+  "success": true,
+  "data": [
+    {
+      "id": "r2-file-session-e1528e1e-jsonl",
+      "name": "session-e1528e1e.jsonl",
+      "path": "vault/synced-chats/session-e1528e1e.jsonl",
+      "type": "file",
+      "category": "chat_logs",
+      "sizeBytes": 121895,
+      "lastModified": "2026-09-02T12:43:22.490Z",
+      "syncStatus": "synced",
+      "r2Etag": "123cbd4ac84d3dffd2dbab4a45d53b49",
+      "downloadUrl": "/api/chats?file=session-e1528e1e.jsonl",
+      "deviceId": "dev-windows-host",
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.232Z",
+        "stale_after": "2026-09-03T19:02:00.232Z",
+        "pipeline_engine": "Local-Filesystem-Watcher",
+        "data_hash": "123cbd4ac84d3dffd2dbab4a45d53b49"
+      }
+    },
+    {
+      "id": "r2-file-transcript-jsonl",
+      "name": "transcript.jsonl",
+      "path": "vault/synced-chats/transcript.jsonl",
+      "type": "file",
+      "category": "chat_logs",
+      "sizeBytes": 76789,
+      "lastModified": "2026-09-03T12:02:18.727Z",
+      "syncStatus": "synced",
+      "r2Etag": "57926336795ff7416bb8b4c6464a86dd",
+      "downloadUrl": "/api/chats?file=transcript.jsonl",
+      "deviceId": "dev-windows-host",
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.233Z",
+        "stale_after": "2026-09-03T19:02:00.233Z",
+        "pipeline_engine": "Local-Filesystem-Watcher",
+        "data_hash": "57926336795ff7416bb8b4c6464a86dd"
+      }
+    },
+    {
+      "id": "r2-file-transcript-full-jsonl",
+      "name": "transcript_full.jsonl",
+      "path": "vault/synced-chats/transcript_full.jsonl",
+      "type": "file",
+      "category": "chat_logs",
+      "sizeBytes": 105982,
+      "lastModified": "2026-09-03T12:02:18.728Z",
+      "syncStatus": "synced",
+      "r2Etag": "c2c87f946fc9cd590e9dd9a0e82f0c50",
+      "downloadUrl": "/api/chats?file=transcript_full.jsonl",
+      "deviceId": "dev-windows-host",
+      "provenance": {
+        "source": "live",
+        "fetched_at": "2026-09-03T19:01:00.233Z",
+        "stale_after": "2026-09-03T19:02:00.233Z",
+        "pipeline_engine": "Local-Filesystem-Watcher",
+        "data_hash": "c2c87f946fc9cd590e9dd9a0e82f0c50"
+      }
+    }
+  ],
+  "totalVolumeGb": 11.55,
+  "provenance": {
+    "source": "live",
+    "fetched_at": "2026-09-03T19:01:00.233Z",
+    "stale_after": "2026-09-03T19:02:00.233Z",
+    "pipeline_engine": "Local-Filesystem-Watcher",
+    "raw_source_ref": "Directory: C:\\Users\\Admin\\.gemini\\antigravity-ide\\scratch\\Antigravity-meter\\synced-chats"
+  }
+}

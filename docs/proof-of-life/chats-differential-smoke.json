@@ -1,0 +1,36 @@
+{
+  "resultA": {
+    "filePath": "session-e1528e1e.jsonl",
+    "totalTurns": 141,
+    "estimatedTotalTokens": 24149,
+    "toolExecutions": 59,
+    "firstTimestamp": null,
+    "lastTimestamp": null,
+    "hourlyTokenBuckets": {},
+    "fileSizeBytes": 121895,
+    "sha256": "fd775475d3a32b69fbbbe708c17b94a034b4db03104bf1f32f0ba9118f03cfbc",
+    "provenance": {
+      "source": "live",
+      "fetched_at": "2026-09-03T18:53:05.167Z",
+      "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+      "data_hash": "fd775475d3a32b69fbbbe708c17b94a034b4db03104bf1f32f0ba9118f03cfbc"
+    }
+  },
+  "resultB": {
+    "filePath": "transcript.jsonl",
+    "totalTurns": 58,
+    "estimatedTotalTokens": 14004,
+    "toolExecutions": 19,
+    "firstTimestamp": null,
+    "lastTimestamp": null,
+    "hourlyTokenBuckets": {},
+    "fileSizeBytes": 76789,
+    "sha256": "ba1144c7c8a1c6603625c006348a2d26f3babad9b202cf11674afbc46326deeb",
+    "provenance": {
+      "source": "live",
+      "fetched_at": "2026-09-03T18:53:05.168Z",
+      "pipeline_engine": "Antigravity-JSONL-Telemetry-Engine-v1",
+      "data_hash": "ba1144c7c8a1c6603625c006348a2d26f3babad9b202cf11674afbc46326deeb"
+    }
+  }
+}
